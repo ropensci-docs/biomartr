@@ -1,0 +1,12 @@
+{
+  "commit": {
+    "commit": "40f1d8a6ebad44c8a12ce8d0638f83a71f75729d",
+    "author": "HajkD <hajkdrost@googlemail.com>",
+    "time": "2021-03-18 20:11:24",
+    "files": 8,
+    "merge": false,
+    "message": "add NA filter rule also for reference assemblies #72\n"
+  },
+  "remote": "https://github.com/ropensci/biomartr",
+  "pkg": "biomartr"
+}
