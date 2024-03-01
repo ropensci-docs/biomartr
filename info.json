@@ -1,0 +1,12 @@
+{
+  "commit": {
+    "commit": "7fbb283032d348c0624a4a505b3f4c1c4f2bf380",
+    "author": "Hajk-Georg Drost <hdrost@a6-hajk-mm.eb.local>",
+    "time": "2023-12-02 16:22:20",
+    "files": 1,
+    "merge": false,
+    "message": "update NEWS\n"
+  },
+  "repo": "https://github.com/ropensci/biomartr",
+  "pkg": "biomartr"
+}
