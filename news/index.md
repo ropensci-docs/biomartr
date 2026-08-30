@@ -1,0 +1,1068 @@
+# Changelog
+
+## [biomartr 1.0.11](https://github.com/ropensci/biomartr/releases/tag/v1.0.11)
+
+#### New features
+
+- Reintroduction of the
+  [`clean.retrieval()`](https://docs.ropensci.org/biomartr/reference/clean.retrieval.md)
+  function [\#123](https://github.com/ropensci/biomartr/issues/123)
+  thanks to [@Roleren](https://github.com/Roleren)
+
+##### GTF support for refseq and genbank
+
+- Complete rewrite of curate.metadata to follow the API used by the rest
+  of the package. It now also works with clean.retrieval as it used to.
+
+#### Bug fixes
+
+- fixing linking issue in `refseq_genbank_ftp_server_kingdoms_url()`
+- fixed a bug that caused bulk download crash when ftp path from API
+  call was `NA` [\#120](https://github.com/ropensci/biomartr/issues/120)
+- remove `NeedsCompilation` flag from DESCRIPTION
+
+## [biomartr 1.0.10](https://github.com/ropensci/biomartr/releases/tag/v1.0.10)
+
+#### New features
+
+##### GTF support for refseq and genbank
+
+- Since refseq and genbank now supports gtf, we allow it in
+  getGFF/getFFF
+
+##### Generalize and fix paths for NCBI gencode ftp server [\#116](https://github.com/ropensci/biomartr/issues/116)
+
+- Generalized paths to single point functions, for easier fixes in the
+  future.
+
+- Fixed from <ftp://> to <https://> for NCBI ftp server
+
+- Skip bacteria now propagates also for collections
+
+## [biomartr 1.0.7](https://github.com/ropensci/biomartr/releases/tag/v1.0.7)
+
+CRAN release: 2023-12-02
+
+#### New features
+
+##### Generalization of Biomart database access [\#108](https://github.com/ropensci/biomartr/issues/108)
+
+- Generalized biomart database interface (now uses https and port 433)
+- added cache for biomart database overview
+- added more unit tests for
+  [`listGenomes()`](https://docs.ropensci.org/biomartr/reference/listGenomes.md)
+  and
+  [`biomart()`](https://docs.ropensci.org/biomartr/reference/biomart.md)
+
+#### Bug fixes
+
+- fixed
+  [`listGenomes()`](https://docs.ropensci.org/biomartr/reference/listGenomes.md)
+  filter error [\#107](https://github.com/ropensci/biomartr/issues/107)
+- Bacteria collection corner case bug fixed
+  [\#109](https://github.com/ropensci/biomartr/issues/109)
+
+## [biomartr 1.0.6](https://github.com/ropensci/biomartr/releases/tag/v1.0.6)
+
+CRAN release: 2023-10-24
+
+#### New features
+
+- Some cool new generalization, and check out function
+  `biomartr:::supported_biotypes(db = "refseq")`. This function will
+  simplify a lot of stuff downstream.
+  ([\#104](https://github.com/ropensci/biomartr/issues/104))
+
+- Tests are now much quicker to run, because
+  [`biomartr::is.genome.available`](https://docs.ropensci.org/biomartr/reference/is.genome.available.md)
+  (which is used basically everywhere) now reads files with data.table
+  instead of reader.
+  ([\#104](https://github.com/ropensci/biomartr/issues/104))
+
+#### Bug fixes
+
+- Fixing bug in
+  [`is.genome.available()`](https://docs.ropensci.org/biomartr/reference/is.genome.available.md)
+  where the skip_bacteria argument was not passed on internally to
+  `is.genome.available.refseq.genbank()`
+  ([\#105](https://github.com/ropensci/biomartr/issues/105))
+
+## [biomartr 1.0.5](https://github.com/ropensci/biomartr/releases/tag/v1.0.5)
+
+CRAN release: 2023-10-04
+
+#### Package generalization
+
+Over 5000 lines have been edited, most of them removed
+([\#100](https://github.com/ropensci/biomartr/issues/100)), to
+generalize the package to make it more safe for future development. This
+progress is still ongoing.
+
+#### New features
+
+- Ensembl genomes is no longer a different database compared to ensembl
+  in biomaRt, since this split is artifical. It is adviced to use only
+  “ensembl” as db from now on, but “ensemblgenomes” will still work.
+- Annotation did mean gff, but it should be both gff and gtf getter,
+  with format specification, this is now fixed and generalized.
+- Added in new kingdom for ensembl: protists supportwith correct
+  collection getters
+- The retrieval from the `UniProt` database is now updated to the new
+  API/FTP path system. Now users can retrieve proteomes using the
+  functions `getProteome(db = "uniprot", ...)` and
+  `getProteomeSet(db = "uniprot", ...)` (see
+  [\#82](https://github.com/ropensci/biomartr/issues/82))
+- new function `getBioSet`: Generic Bio data set extractor
+- new function `getBio`: A wrapper to all bio getters, selected with
+  ‘type’ argument
+- a new function
+  [`getUniProtSTATS()`](https://docs.ropensci.org/biomartr/reference/getUniProtSTATS.md):
+  Retrieve UniProt Database Information File (STATS)
+
+#### Power user cache
+
+The package now supports caching of back end files which used to be
+saved to /tmp folder (i.e. lost on computer restart). This make it easy
+for power users who want higher speed. For more info, see the function
+?cachedir_set
+
+#### Bug fixes
+
+- Fixed many wrong urls and non working functions, more tests are added
+  to make sure they work.
+- Fixed fungi collection accessor for ensembl
+
+## [biomartr 1.0.4](https://github.com/ropensci/biomartr/releases/tag/v1.0.4)
+
+CRAN release: 2023-06-20
+
+#### New Features
+
+- in
+  [`getSummaryFile()`](https://docs.ropensci.org/biomartr/reference/getSummaryFile.md)
+  all columns of the `assembly_summary.txt` are now specified with names
+  and correct data types
+  ([\#92](https://github.com/ropensci/biomartr/issues/92))
+- all `get*()` functions, the
+  [`getKingdomAssemblySummary()`](https://docs.ropensci.org/biomartr/reference/getKingdomAssemblySummary.md),
+  and `is.genome.available.refseq.genbank()` all receive a new argument
+  `skip_bacteria` which is set to `TRUE` by default. This ensures that
+  the huge dataset file for `bacteria` is not downloaded by default when
+  retrieving summary files from `GenBank`. Users who wish to retrieved
+  data from particular bacteria can actively set `skip_bacteria = TRUE`
+  in all `get*()` functions.
+
+#### Bug Fixes
+
+- whenever the low-level function
+  [`getKingdomAssemblySummary()`](https://docs.ropensci.org/biomartr/reference/getKingdomAssemblySummary.md)
+  was called by all get\*() functions, due to an error in the
+  `assembly_summary.txt` file for viruses where the total gene count was
+  stored as character and not as integer (as is the case for all other
+  `assembly_summary.txt` files), an error occurred stating that
+  [`dplyr::bind_rows()`](https://dplyr.tidyverse.org/reference/bind_rows.html)
+  cannot join column \$X35 due to differences in data types. This has
+  now been resolved by parsing the correct data types with `readr`. Many
+  thanks to … for pointing this out to me.
+  ([\#92](https://github.com/ropensci/biomartr/issues/92))
+- fixing md5checks in all `get*()` functions
+
+## [biomartr 1.0.3](https://github.com/ropensci/biomartr/releases/tag/v1.0.3)
+
+CRAN release: 2023-05-07
+
+- adding [pull request](https://github.com/ropensci/biomartr/pull/88)
+  [\#88](https://github.com/ropensci/biomartr/issues/88) which fixes
+  issues with `http` to `https` curl requests (Many thanks to
+  [@Roleren](https://github.com/Roleren))
+
+## [biomartr 1.0.2](https://github.com/ropensci/biomartr/releases/tag/v1.0.2)
+
+CRAN release: 2022-02-23
+
+#### New Functions
+
+- New function
+  [`check_annotation_biomartr()`](https://docs.ropensci.org/biomartr/reference/check_annotation_biomartr.md)
+  helps to check whether downloaded GFF or GTF files are corrupt. Find
+  more details [here](https://github.com/lawremi/rtracklayer/issues/15)
+
+- new function
+  [`getCollectionSet()`](https://docs.ropensci.org/biomartr/reference/getCollectionSet.md)
+  allows users to retrieve a Collection: Genome, Proteome, CDS, RNA,
+  GFF, Repeat Masker, AssemblyStats of multiple species
+
+Example:
+
+``` r
+
+# define scientific names of species for which
+# collections shall be retrieved
+organism_list <- c("Arabidopsis thaliana", 
+                   "Arabidopsis lyrata", 
+                   "Capsella rubella")
+# download the collection of Arabidopsis thaliana from refseq
+# and store the corresponding genome file in '_ncbi_downloads/collection'
+ getCollectionSet( db       = "refseq", 
+             organism = organism_list, 
+             path = "set_collections")
+```
+
+#### New Features
+
+- the
+  [`getGFF()`](https://docs.ropensci.org/biomartr/reference/getGFF.md)
+  function receives a new argument `remove_annotation_outliers` to
+  enable users to remove corrupt lines from a GFF file Example:
+
+``` r
+
+Ath_path <- biomartr::getGFF(organism = "Arabidopsis thaliana", remove_annotation_outliers = TRUE)
+```
+
+- the
+  [`getGFFSet()`](https://docs.ropensci.org/biomartr/reference/getGFFSet.md)
+  function receives a new argument `remove_annotation_outliers` to
+  enable users to remove corrupt lines from a GFF file
+
+- the
+  [`getGTF()`](https://docs.ropensci.org/biomartr/reference/getGTF.md)
+  function receives a new argument `remove_annotation_outliers` to
+  enable users to remove corrupt lines from a GTF file
+
+- adding a new message system to
+  [`biomartr::organismBM()`](https://docs.ropensci.org/biomartr/reference/organismBM.md),
+  [`biomartr::organismAttributes()`](https://docs.ropensci.org/biomartr/reference/organismAttributes.md),
+  and
+  [`biomartr::organismFilters()`](https://docs.ropensci.org/biomartr/reference/organismFilters.md)
+  so that large API queries don’t seem so unresponsive
+
+- [`getCollection()`](https://docs.ropensci.org/biomartr/reference/getCollection.md)
+  receives new arguments `release`, `remove_annotation_outliers`, and
+  `gunzip` that will now be passed on to downstream retrieval functions
+
+- the
+  [`getGTF()`](https://docs.ropensci.org/biomartr/reference/getGTF.md),
+  [`getGenome()`](https://docs.ropensci.org/biomartr/reference/getGenome.md)
+  and
+  [`getGenomeSet()`](https://docs.ropensci.org/biomartr/reference/getGenomeSet.md)
+  functions receives a new argument `assembly_type = "toplevel"` to
+  enable users to choose between toplevel and primary assembly when
+  using ensembl database. Setting `assembly_type = "primary_assembly"`
+  will save a lot a space on hard drives for people using large ensembl
+  genomes.
+
+- all `get*()` functions with `release` argument now check if the
+  ENSEMBL release is \>45 (Many thanks to
+  [@Roleren](https://github.com/Roleren)
+  [\#31](https://github.com/ropensci/biomartr/issues/31)
+  [\#61](https://github.com/ropensci/biomartr/issues/61))
+
+- in all `get*()` functions, the `readr::write_tsv(path = )` was
+  exchanged to `readr::write_tsv(file = )`, since the `readr` package
+  version \> 1.4.0 is depreciating the `path` argument.
+
+- `tbl_df()` was deprecated in dplyr 1.0.0. Please use
+  [`tibble::as_tibble()`](https://tibble.tidyverse.org/reference/as_tibble.html)
+  instead. -\> adjusted
+  [`organismBM()`](https://docs.ropensci.org/biomartr/reference/organismBM.md)
+  accordingly
+
+- `custom_download()`,
+  [`getGENOMEREPORT()`](https://docs.ropensci.org/biomartr/reference/getGENOMEREPORT.md),
+  and other download functions now have specified
+  `withr::local_options(timeout = max(30000000, getOption("timeout")))`
+  which extends the default 60sec timeout to 30000000sec
+
+#### Bug Fixes
+
+- Fixing bug where genome availability check in
+  [`getCollection()`](https://docs.ropensci.org/biomartr/reference/getCollection.md)
+  was only performed in `NCBI RefSeq` and not in other databases due to
+  a constant used in
+  [`is.genome.available()`](https://docs.ropensci.org/biomartr/reference/is.genome.available.md)
+  rather than a variable (Many thanks to Takahiro Yamada for catching
+  the bug) [\#53](https://github.com/ropensci/biomartr/issues/53)
+
+- fixing an issue that caused the
+  [`read_cds()`](https://docs.ropensci.org/biomartr/reference/read_cds.md)
+  function to fail in `data.table` mode (Many thanks to Clement Kent)
+  [\#57](https://github.com/ropensci/biomartr/issues/57)
+
+- fixing an `SSL` bug that was found on `Ubuntu 20.04` systems
+  [\#66](https://github.com/ropensci/biomartr/issues/66) (Many thanks to
+  Håkon Tjeldnes)
+
+- fixing global variable issue that caused
+  [`clean.retrieval()`](https://docs.ropensci.org/biomartr/reference/clean.retrieval.md)
+  to fail when no documentation file was in a
+  [`meta.retrieval()`](https://docs.ropensci.org/biomartr/reference/meta.retrieval.md)
+  folder
+
+- The NCBI recently started adding `NA` values as FTP file paths in
+  their `species summary files` for species without reference genomes.
+  As a result
+  [`meta.retrieval()`](https://docs.ropensci.org/biomartr/reference/meta.retrieval.md)
+  stopped working, because no FTP paths were found for some species.
+  This issue was now fixed by adding the filter rule `!is.na(ftp_path)`
+  into all `get*()` functions (Many thanks for making me aware of this
+  issue Ashok Kumar Sharma
+  [\#34](https://github.com/ropensci/biomartr/issues/34) and Dominik
+  Merges [\#72](https://github.com/ropensci/biomartr/issues/72))
+
+- Fixing an issue in `custom_download()` where the `method` argument was
+  causing issues when downloading from `https` directed `ftp` sites
+  (Many thanks to [@cmatKhan](https://github.com/cmatKhan))
+  [\#76](https://github.com/ropensci/biomartr/issues/76)
+
+- Fixing issue when trying to combine multiple summary-stats files where
+  NA’s were present in the list item that was passed along for
+  combination in
+  [`meta.retrieval()`](https://docs.ropensci.org/biomartr/reference/meta.retrieval.md)
+  [\#73](https://github.com/ropensci/biomartr/issues/73) (Many thanks to
+  Dominik Merges)
+
+- Fixing a bug in
+  [`download.database.all()`](https://docs.ropensci.org/biomartr/reference/download.database.all.md)
+  where the lack of removing listed file `*-metadata.json` caused
+  corruption of the download process (Many thanks to Jaruwatana
+  Lotharukpong)
+
+biomartr 0.9.2 - minor changes to comply with CRAN policy regarding
+Internet access failure -\> Instead of using warnings or error messages,
+only gentle messages are allowed to be used
+
+## biomartr 0.9.0
+
+CRAN release: 2019-05-21
+
+**Please be aware that as of April 2019, ENSEMBLGENOMES was retired
+([see details
+here](https://www.ensembl.info/2019/03/08/joint-rest-server-for-ensembl-and-ensembl-genomes-in-ensembl-96/)).
+Hence, all `biomartr` functions were updated and won’t support data
+retrieval from `ENSEMBLGENOMES` servers anymore.**
+
+#### New Functions
+
+- New function
+  [`clean.retrieval()`](https://docs.ropensci.org/biomartr/reference/clean.retrieval.md)
+  enables formatting and automatic unzipping of meta.retrieval output
+  (find out more here:
+  <https://docs.ropensci.org/biomartr/articles/MetaGenome_Retrieval.html#un-zipping-downloaded-files>)
+- New function
+  [`getGenomeSet()`](https://docs.ropensci.org/biomartr/reference/getGenomeSet.md)
+  allows users to easily retrieve genomes of multiple specified species.
+  In addition, the genome summary statistics for all retrieved species
+  will be stored as well to provide users with insights regarding the
+  genome assembly quality of each species. This file can be used as
+  Supplementary Information file in publications to facilitate
+  reproducible research.
+- New function
+  [`getProteomeSet()`](https://docs.ropensci.org/biomartr/reference/getProteomeSet.md)
+  allows users to easily retrieve proteomes of multiple specified
+  species
+- New function
+  [`getCDSSet()`](https://docs.ropensci.org/biomartr/reference/getCDSSet.md)
+  allows users to easily retrieve coding sequences of multiple specified
+  species
+- New function
+  [`getGFFSet()`](https://docs.ropensci.org/biomartr/reference/getGFFSet.md)
+  allows users to easily retrieve GFF annotation files of multiple
+  specified species
+- New function
+  [`getRNASet()`](https://docs.ropensci.org/biomartr/reference/getRNASet.md)
+  allows users to easily retrieve RNA sequences of multiple specified
+  species
+- New function
+  [`summary_genome()`](https://docs.ropensci.org/biomartr/reference/summary_genome.md)
+  allows users to retrieve summary statistics for a genome assembly file
+  to assess the influence of genome assembly qualities when performing
+  comparative genomics tasks
+- New function
+  [`summary_cds()`](https://docs.ropensci.org/biomartr/reference/summary_cds.md)
+  allows users to retrieve summary statistics for a coding sequence
+  (CDS) file. We noticed, that many CDS files stored in NCBI or ENSEMBL
+  databases contain sequences that aren’t divisible by 3 (division into
+  codons). This makes it difficult to divide CDS into codons for
+  e.g. codon alignments or translation into protein sequences. In
+  addition, some CDS files contain a significant amount of sequences
+  that do not start with AUG (start codon). This function enables users
+  to quantify how many of these sequences exist in a downloaded CDS file
+  to process these files according to the analyses at hand.
+
+#### New Features of Existing Functions
+
+- the default value of argument `reference` in
+  [`meta.retrieval()`](https://docs.ropensci.org/biomartr/reference/meta.retrieval.md)
+  changed from `reference = TRUE` to `reference = FALSE`. This way all
+  genomes (reference AND non-reference) genomes will be downloaded by
+  default. This is what users seem to prefer.
+- [`getCollection()`](https://docs.ropensci.org/biomartr/reference/getCollection.md)
+  now also retrieves `GTF` files when `db = 'ensembl'`
+- [`getAssemblyStats()`](https://docs.ropensci.org/biomartr/reference/getAssemblyStats.md)
+  now also performs md5 checksum test
+- all md5 checksum tests now retrieve the new md5checkfile format from
+  NCBI RefSeq and Genbank
+- [`getGTF()`](https://docs.ropensci.org/biomartr/reference/getGTF.md):
+  users can now specify the NCBI Taxonomy ID or Accession ID in addition
+  to the scientific name in argument ‘organism’ to retrieve genome
+  assemblies
+- [`getGFF()`](https://docs.ropensci.org/biomartr/reference/getGFF.md):
+  users can now specify the NCBI Taxonomy ID or Accession ID for ENSEMBL
+  in addition to the scientific name in argument ‘organism’ to retrieve
+  genome assemblies
+- [`getMarts()`](https://docs.ropensci.org/biomartr/reference/getMarts.md)
+  will now throw an error when BioMart servers cannot be reached
+  ([\#36](https://github.com/ropensci/biomartr/issues/36))
+- [`getGenome()`](https://docs.ropensci.org/biomartr/reference/getGenome.md)
+  now also stores the genome summary statistics (see
+  `?summary_genome()`) for the retrieved species in the `documentation`
+  folder to provide users with insights regarding the genome assembly
+  quality
+- In all get\*() functions the default for argument `reference` is now
+  set from `reference = TRUE` to `reference = FALSE` (= new default)
+- all `get*()` functions now received a new argument `release` which
+  allows users to retrieve specific release versions of genomes,
+  proteomes, etc from `ENSEMBL` and `ENSEMBLGENOMES`
+- all `get*()` functions received two new arguments `clean_retrieval`
+  and `gunzip` which allows users to upzip the downloaded files directly
+  in the `get*()` function call and rename the file for more convenient
+  downstream analyses
+
+## biomartr 0.8.0
+
+CRAN release: 2018-06-27
+
+#### New Functions
+
+- new function
+  [`getCollection()`](https://docs.ropensci.org/biomartr/reference/getCollection.md)
+  for retrieval of a collection: the genome sequence, protein sequences,
+  gff files, etc for a particular species
+
+#### New Functionality of Existing Functions
+
+- [`getProteome()`](https://docs.ropensci.org/biomartr/reference/getProteome.md)
+  can now retrieve proteomes from the
+  [UniProt](https://www.uniprot.org/) database by specifying
+  `getProteome(db = "uniprot")`.
+
+- [`is.genome.available()`](https://docs.ropensci.org/biomartr/reference/is.genome.available.md)
+  now prints out more useful interactive messages when searching for
+  available organisms
+
+- [`is.genome.available()`](https://docs.ropensci.org/biomartr/reference/is.genome.available.md)
+  can now handle `taxids` and `assembly_accession ids` in addition to
+  the scientific name when specifying argument `organism`
+
+- [`is.genome.available()`](https://docs.ropensci.org/biomartr/reference/is.genome.available.md)
+  can now check for organism availability in the UniProt database
+
+- [`getGenome()`](https://docs.ropensci.org/biomartr/reference/getGenome.md):
+  users can now specify the NCBI Taxonomy ID or Accession ID in addition
+  to the scientific name in argument ‘organism’ to retrieve genome
+  assemblies
+
+- [`getProteome()`](https://docs.ropensci.org/biomartr/reference/getProteome.md):
+  users can now specify the NCBI Taxonomy ID or Accession ID in addition
+  to the scientific name in argument ‘organism’ to retrieve proteomes
+
+- [`getCDS()`](https://docs.ropensci.org/biomartr/reference/getCDS.md):
+  users can now specify the NCBI Taxonomy ID or Accession ID in addition
+  to the scientific name in argument ‘organism’ to retrieve CDS
+
+- [`getRNA()`](https://docs.ropensci.org/biomartr/reference/getRNA.md):
+  users can now specify the NCBI Taxonomy ID or Accession ID in addition
+  to the scientific name in argument ‘organism’ to retrieve RNAs
+
+- [`is.genome.available()`](https://docs.ropensci.org/biomartr/reference/is.genome.available.md):
+  argument order was changed from is.genome.available(organism, details,
+  db) to is.genome.available(db, organism, details) to be logically more
+  consistent with all `get*()` functions
+
+- `meta.retrieval` receives a new argument `restart_at_last` to indicate
+  whether or not the download process when re-running the
+  `meta.retrieval` function shall pick up at the last species or whether
+  it should crawl through all existing files to check the md5checksum
+
+- `meta.retrieval` now generates an csv overview file in the `doc`
+  folder which stores genome version, date, origin, etc information for
+  all downloaded organisms and can be directly used as Supplementary
+  Data file in publications to increase computational and biological
+  reproducibility of the genomics study
+
+- [`download.database.all()`](https://docs.ropensci.org/biomartr/reference/download.database.all.md)
+  can now skip already downloaded files and internally removes corrupted
+  files with non-matching md5checksum. Re-downloading of currupted files
+  and be performed by simply re-running the
+  [`download.database.all()`](https://docs.ropensci.org/biomartr/reference/download.database.all.md)
+  command
+
+## biomartr 0.7.0
+
+CRAN release: 2018-01-03
+
+#### Function changes
+
+- the function
+  [`meta.retrieval()`](https://docs.ropensci.org/biomartr/reference/meta.retrieval.md)
+  will now pick up the download at the organism where it left off and
+  will report which species have already been retrieved
+
+- all `get*()` functions and the
+  [`meta.retrieval()`](https://docs.ropensci.org/biomartr/reference/meta.retrieval.md)
+  function receive a new argument `reference` which allows users to
+  retrieve not-reference or not-representative genome versions when
+  downloading from NCBI RefSeq or NCBI Genbank
+
+- the argument order in
+  [`meta.retrieval()`](https://docs.ropensci.org/biomartr/reference/meta.retrieval.md)
+  changed from `meta.retrieval(kingdom, group, db, ...)` to
+  `meta.retrieval(db,kingdom, group, ...)` to make the argument order
+  more consistent with the `get*()` functions
+
+- the argument order in
+  [`getGroups()`](https://docs.ropensci.org/biomartr/reference/getGroups.md)
+  changed from `getGroups(kingdom, db)` to `getGroups(db, kingdom)` to
+  make the argument order more consistent with the `get*()` and
+  [`meta.retrieval()`](https://docs.ropensci.org/biomartr/reference/meta.retrieval.md)
+  functions
+
+#### New Functions
+
+- new internal functions `existingOrganisms()` and
+  `existingOrganisms_ensembl()` which check the organisms that have
+  already been downloaded
+
+## biomartr 0.5.2
+
+CRAN release: 2017-09-20
+
+#### Bug fixes
+
+- fixing bug (<https://github.com/ropensci/biomartr/issues/6>) that
+  caused incorrect filtering condition when more than one entry for an
+  organism is present in the assemblysummary.txt file at NCBI (Thanks to
+  [@kalmeshv](https://github.com/kalmeshv))
+
+## biomartr 0.5.1
+
+CRAN release: 2017-05-28
+
+#### Bug fixes
+
+- fixing a bug in `exists.ftp.file()` and `getENSEMBLGENOMES.Seq()` that
+  caused bacterial genome, proteome, etc retrieval to fail due to the
+  wrong construction of a query ftp request
+  <https://github.com/ropensci/biomartr/issues/7> (Many thanks to
+  [@dbsseven](https://github.com/dbsseven))
+
+- fix a major bug in which organisms having no representative genome
+  would generate NULL paths that subsequently crashed the
+  [`meta.retrieval()`](https://docs.ropensci.org/biomartr/reference/meta.retrieval.md)
+  function when it tried to print out the result paths.
+
+#### New Functions
+
+- new function
+  [`getRepeatMasker()`](https://docs.ropensci.org/biomartr/reference/getRepeatMasker.md)
+  for retrieval of Repeat Masker output files
+
+- new function
+  [`getGTF()`](https://docs.ropensci.org/biomartr/reference/getGTF.md)
+  for genome annotation retrieval from `ensembl` and `ensemblgenomes` in
+  `gtf` format (Thanks for suggesting it Ge Tan)
+
+- new function
+  [`getRNA()`](https://docs.ropensci.org/biomartr/reference/getRNA.md)
+  to perform RNA Sequence Retrieval from NCBI and ENSEMBL databases
+  (Thanks for suggesting it
+  [@carlo-berg](https://github.com/carlo-berg))
+
+- new function
+  [`read_rna()`](https://docs.ropensci.org/biomartr/reference/read_rna.md)
+  for importing Repeat Masker output files downloaded with
+  [`getRepeatMasker()`](https://docs.ropensci.org/biomartr/reference/getRepeatMasker.md)
+
+- new function
+  [`read_rm()`](https://docs.ropensci.org/biomartr/reference/read_rm.md)
+  for importing RNA downloaded with
+  [`getRNA()`](https://docs.ropensci.org/biomartr/reference/getRNA.md)
+  as Biostrings or data.table object
+
+- new helper function `custom_download()` that aims to make the download
+  process more robust and stable -\> In detail, the download process is
+  now adapting to the operating system, e.g. using either `curl`
+  (macOS), `wget` (Linux), or `wininet` (Windows)
+
+#### Function changes
+
+- function name
+  [`listDatabases()`](https://docs.ropensci.org/biomartr/reference/listDatabases.md)
+  has been renamed
+  [`listNCBIDatabases()`](https://docs.ropensci.org/biomartr/reference/listDatabases.md).
+  In `biomartr` version 0.6.0 the function name
+  [`listDatabases()`](https://docs.ropensci.org/biomartr/reference/listDatabases.md)
+  will be depreciated
+
+- `meta.retieval()` and `meta.retieval.all()` now allow the bulk
+  retrieval of GTF files for `type = 'ensembl'` and
+  `type = 'esnemblgenomes'` via `type = "gtf"`. See
+  [`getGTF()`](https://docs.ropensci.org/biomartr/reference/getGTF.md)
+  for more details.
+
+- `meta.retieval()` and `meta.retieval.all()` now allow the bulk
+  retrieval of RNA files via `type = "rna"`. See
+  [`getRNA()`](https://docs.ropensci.org/biomartr/reference/getRNA.md)
+  for more details.
+
+- `meta.retieval()` and `meta.retieval.all()` now allow the bulk
+  retrieval of Repeat Masker output files via `type = "rm"`. See
+  [`getRepeatMasker()`](https://docs.ropensci.org/biomartr/reference/getRepeatMasker.md)
+  for more details.
+
+- all `get*()` retrieval functions now skip the download of a particular
+  file if it already exists in the specified file path
+
+- [`download.database()`](https://docs.ropensci.org/biomartr/reference/download.database.md)
+  and
+  [`download.database.all()`](https://docs.ropensci.org/biomartr/reference/download.database.all.md)
+  now internally perform md5 check sum checks to make sure that the file
+  download was successful
+
+- [`download.database()`](https://docs.ropensci.org/biomartr/reference/download.database.md)
+  and
+  [`download.database.all()`](https://docs.ropensci.org/biomartr/reference/download.database.all.md)
+  now return the file paths of the downloaded file so that it is easier
+  to use these functions when constructing pipelines,
+  e.g. `download.database() %>% ...` or
+  `download.database.all() %>% ...`.
+
+- [`meta.retrieval()`](https://docs.ropensci.org/biomartr/reference/meta.retrieval.md)
+  and
+  [`meta.retrieval.all()`](https://docs.ropensci.org/biomartr/reference/meta.retrieval.all.md)
+  now return the file paths of the downloaded file so that it is easier
+  to use these functions when constructing pipelines,
+  e.g. `meta.retrieval() %>% ...` or `meta.retrieval() %>% ...`.
+
+- [`getGenome()`](https://docs.ropensci.org/biomartr/reference/getGenome.md),
+  [`getProteome()`](https://docs.ropensci.org/biomartr/reference/getProteome.md),
+  [`getCDS()`](https://docs.ropensci.org/biomartr/reference/getCDS.md),
+  [`getRNA()`](https://docs.ropensci.org/biomartr/reference/getRNA.md),
+  [`getGFF()`](https://docs.ropensci.org/biomartr/reference/getGFF.md),
+  and
+  [`getAssemblyStats()`](https://docs.ropensci.org/biomartr/reference/getAssemblyStats.md)
+  now internally perform md5 checksum tests to make sure that files are
+  retrieved intact.
+
+## biomartr 0.4.0
+
+CRAN release: 2017-03-14
+
+#### Bug fixes
+
+- fixing a major bug <https://github.com/ropensci/biomartr/issues/6>
+  that caused that in all `get*()` (genome, proteome, gff, etc.) and
+  `meta.retrieval*()` functions the meta retrieval process errored and
+  terminated whenever NCBI or ENSEMBL didn’t store all types of
+  sequences for a particular organism: genome, proteome, cds, etc. This
+  has been fixed now and function calls such as
+  `meta.retrieval(kingdom = "bacteria", db = "genbank", type = "proteome")`
+  should work properly now (Thanks to
+  [@ARamesh123](https://github.com/ARamesh123) for making me aware if
+  this bug). Hence, this bug affected all attempts to download all
+  proteome sequences e.g. for bacteria and viruses, because NCBI does
+  not store genome AND proteome information for all bacterial or viral
+  species.
+
+#### New Functions
+
+- new function
+  [`getAssemblyStats()`](https://docs.ropensci.org/biomartr/reference/getAssemblyStats.md)
+  allows users to retrieve the genome assembly stats file from NCBI
+  RefSeq or Genbank,
+  e.g. <ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.36_GRCh38.p10/GCF_000001405.36_GRCh38.p10_assembly_stats.txt>
+
+- new function
+  [`read_assemblystats()`](https://docs.ropensci.org/biomartr/reference/read_assemblystats.md)
+  allows to import the genome assembly stats file from NCBI RefSeq or
+  Genbank that was retrieved using the
+  [`getAssemblyStats()`](https://docs.ropensci.org/biomartr/reference/getAssemblyStats.md)
+  function
+
+#### Function changes
+
+- [`meta.retrieval()`](https://docs.ropensci.org/biomartr/reference/meta.retrieval.md)
+  and
+  [`meta.retrieval.all()`](https://docs.ropensci.org/biomartr/reference/meta.retrieval.all.md)
+  can now also download genome assembly stats for all selected species
+
+- [`meta.retrieval()`](https://docs.ropensci.org/biomartr/reference/meta.retrieval.md)
+  receives a new argument `group` that allows users to retrieve species
+  belonging to a subgroup instead of the entire kingdom. Available
+  groups can be retrieved with
+  [`getGroups()`](https://docs.ropensci.org/biomartr/reference/getGroups.md).
+
+- functions `getSubgroups()` and `listSubgroups()` have been removed and
+  their initial functionality has been merged and integrated into
+  [`getGroups()`](https://docs.ropensci.org/biomartr/reference/getGroups.md)
+  and
+  [`listGroups()`](https://docs.ropensci.org/biomartr/reference/listGroups.md)
+
+- [`listGroups()`](https://docs.ropensci.org/biomartr/reference/listGroups.md)
+  receives a new argument `details` that allows users to retrieve the
+  organism names that belong to the corresponding subgroups
+
+- [`getGroups()`](https://docs.ropensci.org/biomartr/reference/getGroups.md)
+  is now based on
+  [`listGroups()`](https://docs.ropensci.org/biomartr/reference/listGroups.md)
+
+- internal function `getGENOMESREPORT()` is now exported and available
+  to the user
+
+- all `organism*()` functions now also support Ensembl Plants, Ensembl
+  Metazoa, Ensembl Protist, and Ensembl Fungi (Thanks for pointing out
+  [Alex Gabel](https://github.com/AlexGa))
+
+- [`getMarts()`](https://docs.ropensci.org/biomartr/reference/getMarts.md)
+  and
+  [`getDatasets()`](https://docs.ropensci.org/biomartr/reference/getDatasets.md)
+  now also support Ensembl Plants, Ensembl Metazoa, Ensembl Protist, and
+  Ensembl Fungi (Thanks for pointing out [Alex
+  Gabel](https://github.com/AlexGa))
+
+#### Vignette updates
+
+- Vignette `Meta-Genome Retrieval` has more examples how to download
+  genomes of species that belong to the same subgroup
+
+## biomartr 0.3.0
+
+CRAN release: 2017-02-09
+
+#### Bug fixes
+
+- Fixing a bug <https://github.com/ropensci/biomartr/issues/2> based on
+  the [readr package](https://github.com/tidyverse/readr) that affected
+  the
+  [`getSummaryFile()`](https://docs.ropensci.org/biomartr/reference/getSummaryFile.md),
+  [`getKingdomAssemblySummary()`](https://docs.ropensci.org/biomartr/reference/getKingdomAssemblySummary.md),
+  [`getMetaGenomeSummary()`](https://docs.ropensci.org/biomartr/reference/getMetaGenomeSummary.md),
+  [`getENSEMBL.Seq()`](https://docs.ropensci.org/biomartr/reference/getENSEMBL.Seq.md)
+  and `getENSEMBLGENOMES.Seq()` functions causing quoted lines in the
+  `assembly_summary.txt` to be omitted when reading these files. This
+  artefact caused that e.g. instead of information of 80,000 Bacteria
+  genomes only 40,000 (which non-quotations) were read (Thanks to [Xin
+  Wu](https://github.com/alartin)).
+
+## biomartr 0.2.1
+
+CRAN release: 2016-12-15
+
+In this version of `biomartr` the `organism*()` functions were adapted
+to the new [ENSEMBL 87
+release](https://www.ensembl.info/2016/12/08/ensembl-87-has-been-released/)
+in which organism name specification in the Biomart description column
+[was changed](https://github.com/ropensci/biomartr/issues/1) from a
+scientific name convention to a mix of common name and scientific name
+convention.
+
+- all `organism*()` functions have been adapted to the new ENSEMBL 87
+  release organism name notation that is used in the Biomart description
+
+- fixing error handling bug that caused commands such as
+  `download.database(db = "nr.27.tar.gz")` to not execute properly
+
+## biomartr 0.2.0
+
+CRAN release: 2016-11-22
+
+In this version, `biomartr` was extended to now retrieve genome,
+proteome, CDS, GFF and meta-genome data also from
+[ENSEMBL](https://www.ensembl.org/index.html) and
+[ENSEMLGENOMES](https://ensemblgenomes.org/). Furthermore, all NCBI
+retrieval functions were updated to the new server folder structure
+standards of NCBI.
+
+#### New Functions
+
+- new meta-retrieval function
+  [`meta.retrieval.all()`](https://docs.ropensci.org/biomartr/reference/meta.retrieval.all.md)
+  allows users to download all individual genomes of all kingdoms of
+  life with one command
+
+- new metagenome retrieval function
+  [`getMetaGenomes()`](https://docs.ropensci.org/biomartr/reference/getMetaGenomes.md)
+  allows users to retrieve metagenome projects from NCBI Genbank
+
+- new metagenome retrieval function
+  [`getMetaGenomeAnnotations()`](https://docs.ropensci.org/biomartr/reference/getMetaGenomeAnnotations.md)
+  allows users to retrieve annotation files for genomes belonging to a
+  metagenome project stored at NCBI Genbank
+
+- new retrieval function
+  [`getGFF()`](https://docs.ropensci.org/biomartr/reference/getGFF.md)
+  allows users to retrieve annotation (\*.gff) files for specific
+  genomes from NCBI and ENSEMBL databases
+
+- new import function
+  [`read_gff()`](https://docs.ropensci.org/biomartr/reference/read_gff.md)
+  allowing users to import GFF files downloaded with
+  [`getGFF()`](https://docs.ropensci.org/biomartr/reference/getGFF.md)
+
+- new internal functions to check for availability of ENSEMBL or
+  ENSEMBLGENOMES databases
+
+- new database retrieval function
+  [`download.database.all()`](https://docs.ropensci.org/biomartr/reference/download.database.all.md)
+  allows users to download entire NCBI databases with one command
+
+- new function
+  [`listMetaGenomes()`](https://docs.ropensci.org/biomartr/reference/listMetaGenomes.md)
+  allowing users to list available metagenomes on NCBI Genbank
+
+- new external helper function
+  [`getSummaryFile()`](https://docs.ropensci.org/biomartr/reference/getSummaryFile.md)
+  to retrieve the assembly_summary.txt file from NCBI
+
+- new external helper function
+  [`getKingdomAssemblySummary()`](https://docs.ropensci.org/biomartr/reference/getKingdomAssemblySummary.md)
+  to retrieve the assembly_summary.txt files from NCBI for all kingdoms
+  and combine them into one big data.frame
+
+- new function
+  [`listKingdoms()`](https://docs.ropensci.org/biomartr/reference/listKingdoms.md)
+  allows users to list the number of available species per kingdom of
+  life
+
+- new function
+  [`listGroups()`](https://docs.ropensci.org/biomartr/reference/listGroups.md)
+  allows users to list the number of available species per group
+
+- new function `listSubgroups()` allows users to list the number of
+  available species per subgroup
+
+- new function
+  [`getGroups()`](https://docs.ropensci.org/biomartr/reference/getGroups.md)
+  allows users to retrieve available groups for a kingdom of life
+
+- new function `getSubgroups()` allows users to retrieve available
+  subgroups for a kingdom of life
+
+- new external helper function
+  [`getMetaGenomeSummary()`](https://docs.ropensci.org/biomartr/reference/getMetaGenomeSummary.md)
+  to retrieve the assembly_summary.txt files from NCBI genbank
+  metagenomes
+
+- new internal helper function
+  [`getENSEMBL.Seq()`](https://docs.ropensci.org/biomartr/reference/getENSEMBL.Seq.md)
+  acting as main interface function to communicate with the ENSEMBL
+  database API for sequence retrieval
+
+- new internal helper function `getENSEMBLGENOMES.Seq()` acting as main
+  interface function to communicate with the ENSEMBL database API for
+  sequence retrieval
+
+- new internal helper function `getENSEMBL.Annotation()` acting as main
+  interface function to communicate with the ENSEMBL database API for
+  GFF retrieval
+
+- new internal helper function `getENSEMBLGENOMES.Annotation()` acting
+  as main interface function to communicate with the ENSEMBL database
+  API for GFF retrieval
+
+- new internal helper function `get.ensemblgenome.info()` to retrieve
+  general organism information from ENSEMBLGENOMES
+
+- new internal helper function
+  [`get.ensembl.info()`](https://docs.ropensci.org/biomartr/reference/get.ensembl.info.md)
+  to retrieve general organism information from ENSEMBL
+
+- new internal helper function
+  [`getGENOMEREPORT()`](https://docs.ropensci.org/biomartr/reference/getGENOMEREPORT.md)
+  to retrieve the genome reports file from
+  <ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt>
+
+- new internal helper function `connected.to.internet()` enabling
+  internet connection check
+
+#### Function changes
+
+- functions
+  [`getGenome()`](https://docs.ropensci.org/biomartr/reference/getGenome.md),
+  [`getProteome()`](https://docs.ropensci.org/biomartr/reference/getProteome.md),
+  and
+  [`getCDS()`](https://docs.ropensci.org/biomartr/reference/getCDS.md)
+  now can also in addition to NCBI retrieve genomes, proteomes or CDS
+  from [ENSEMBL](https://www.ensembl.org/index.html) and
+  [ENSEMLGENOMES](https://ensemblgenomes.org/)
+
+- the functions
+  [`getGenome()`](https://docs.ropensci.org/biomartr/reference/getGenome.md),
+  [`getProteome()`](https://docs.ropensci.org/biomartr/reference/getProteome.md),
+  and
+  [`getCDS()`](https://docs.ropensci.org/biomartr/reference/getCDS.md)
+  were completely re-written and now use the assembly_summary.txt files
+  provided by NCBI to retrieve the download path to the corresponding
+  genome. Furthermore, these functions now lost the `kingdom` argument.
+  Users now only need to specify the organism name and not the kingdom
+  anymore. Furthermore, all `get*` functions now return the path to the
+  downloaded genome so that this path can be used as input to all
+  `read_*` functions.
+
+- `download_databases()` has been renamed to `download.databases()` to
+  be more consistent with other function notation
+
+- the argument `db_format` was removed from
+  [`listDatabases()`](https://docs.ropensci.org/biomartr/reference/listDatabases.md)
+  and
+  [`download.database()`](https://docs.ropensci.org/biomartr/reference/download.database.md)
+  because it was misleading
+
+- the command `listDatabases("all")` now returns all available NCBI
+  databases that can be retrieved with
+  [`download.database()`](https://docs.ropensci.org/biomartr/reference/download.database.md)
+
+- [`download.database()`](https://docs.ropensci.org/biomartr/reference/download.database.md)
+  now internally checks if input database specified by the user is
+  actually available on NCBI servers
+
+- the documentary file generated by
+  [`getGenome()`](https://docs.ropensci.org/biomartr/reference/getGenome.md),
+  [`getProteome()`](https://docs.ropensci.org/biomartr/reference/getProteome.md),
+  and
+  [`getCDS()`](https://docs.ropensci.org/biomartr/reference/getCDS.md)
+  is now extended to store more details about the downloaded genome
+
+- argument `database` in
+  [`is.genome.available()`](https://docs.ropensci.org/biomartr/reference/is.genome.available.md)
+  and
+  [`listGenomes()`](https://docs.ropensci.org/biomartr/reference/listGenomes.md)
+  has been renamed to `db` to be consistent with all other sequence
+  retrieval functions
+
+- [`is.genome.available()`](https://docs.ropensci.org/biomartr/reference/is.genome.available.md)
+  now also checks availability of organisms in ENSEMBL. See
+  `db = "ensembl"`
+
+- the argument `db_name` in
+  [`listDatabases()`](https://docs.ropensci.org/biomartr/reference/listDatabases.md)
+  has been renamed `db` to be more consistent with the notation in other
+  functions
+
+- the argument `name` in
+  [`download.database()`](https://docs.ropensci.org/biomartr/reference/download.database.md)
+  has been renamed `db` to be more consistent with the notation in other
+  functions
+
+- [`getKingdoms()`](https://docs.ropensci.org/biomartr/reference/getKingdoms.md)
+  now retrieves also kingdom information for ENSEMBL and ENSEMBLGENOMES
+
+- [`getKingdoms()`](https://docs.ropensci.org/biomartr/reference/getKingdoms.md)
+  received new argument `db` to specify from which database
+  (e.g. `refseq`, `genbank`, `ensembl` or `ensemblgenomes`) kingdom
+  information shall be retrieved
+
+- `getKingdoms(db = "refseq")` received one more member: `"viral"`,
+  allowing the genome retrieval of all viruses
+
+- argument `out.folder` in
+  [`meta.retrieval()`](https://docs.ropensci.org/biomartr/reference/meta.retrieval.md)
+  has been renamed to `path` to be more consistent with other retrieval
+  functions
+
+- all `read_*` functions now received a new argument `obj.type` allowing
+  users to choose between storing input genomes as Biostrings object or
+  data.table object
+
+- all `read_*` functions now have `format = "fasta"` as default
+
+- the `kingdom` argument in the
+  [`listGenomes()`](https://docs.ropensci.org/biomartr/reference/listGenomes.md)
+  function was renamed to `type`, now allowing users to specify not only
+  specify kingdoms, but also groups and subgroups. Use:
+  `listGenomes(type = "kingdom")` or `listGenomes(type = "group")` or
+  `listGenomes(type = "subgroup")`
+
+- the
+  [`listGenomes()`](https://docs.ropensci.org/biomartr/reference/listGenomes.md)
+  function receives a new argument `subset` to specify a subset of the
+  selected `type` argument. E.g. `subset = "Eukaryota"` when specifying
+  `type = "kingdom"`
+
+#### Vignette updates
+
+- new Vignette `Meta-Genome Retrieval`
+- Update examples and extend `Introduction` Vignette
+- Update examples and extend `Database Retrieval` Vignette
+- Update examples and extend `Sequence Retrieval` Vignette
+- Update examples and extend `Functional Annotation` Vignette
+
+## biomartr 0.1.0
+
+CRAN release: 2016-08-07
+
+- fixing a parsing error of the file
+  `ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/assembly_summary.txt`
+  The problem was that comment lines were introduced and columns
+  couldn’t be parsed correctly anymore. This caused that genomes,
+  proteomes, and CDS files could not be downloaded properly. This has
+  been fixed now.
+
+- genomes, proteome, and CDS as well as meta-genomes can now be
+  retrieved from RefSeq and Genbank (not only RefSeq); only
+  [`getCDS()`](https://docs.ropensci.org/biomartr/reference/getCDS.md)
+  does not have genebank access, becasue genbank does not provide CDS
+  sequences
+
+- adding new function
+  [`meta.retrieval()`](https://docs.ropensci.org/biomartr/reference/meta.retrieval.md)
+  to mass retrieve genomes for entire kingdoms of life
+
+- fixed a major bug in
+  [`organismBM()`](https://docs.ropensci.org/biomartr/reference/organismBM.md)
+  causing the function to fail. The failure of this function affected
+  all downstream `organism*()` functions. Bug is now fixed and
+  everything works properly
+
+- updated Vignettes
+
+## biomartr 0.0.3
+
+CRAN release: 2016-03-02
+
+- updating unit tests for new API
+
+- fixing API problems that caused all BioMart related functions to fail
+
+- fixing retrieval problems in
+  [`getCDS()`](https://docs.ropensci.org/biomartr/reference/getCDS.md),
+  [`getProteome()`](https://docs.ropensci.org/biomartr/reference/getProteome.md),
+  and
+  [`getGenome()`](https://docs.ropensci.org/biomartr/reference/getGenome.md)
+
+- the
+  [`listDatabases()`](https://docs.ropensci.org/biomartr/reference/listDatabases.md)
+  function now has a new option `db_name = "all"` allowing users to list
+  all available databases stored on NCBI
+
+#### Vignettes
+
+- adding new vignette: Database Retrieval
+- update the vignettes: Phylotranscriptomics, Sequence Retrieval, and
+  Functional Annotation
+
+## biomartr 0.0.2
+
+CRAN release: 2015-08-07
+
+#### Vignettes
+
+- adding vignettes: Introduction, Functional Annotation,
+  Phylotranscriptomics, and Sequence Retrieval
+
+## biomartr 0.0.1
+
+CRAN release: 2015-07-22
+
+Release Version

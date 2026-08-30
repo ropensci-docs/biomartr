@@ -1,0 +1,13 @@
+{
+  "commit": {
+    "commit": "5affece1736b5d3198c788456320a262c63ceb8e",
+    "author": "Hajk-Georg Drost <HajkD@users.noreply.github.com>",
+    "time": "2025-12-02T15:45:39Z",
+    "files": 1,
+    "merge": false,
+    "message": "Remove philentropy from DESCRIPTION\n\nRemoved 'philentropy' from the Imports section (see #124)."
+  },
+  "repo": "https://github.com/ropensci/biomartr",
+  "pkg": "biomartr",
+  "time": "2026-08-30T07:35:00Z"
+}
